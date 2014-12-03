@@ -27,7 +27,7 @@ public class Server extends GameLogic implements Runnable
             Socket s1 = se.accept();
             Socket s2 = se.accept();
             Server serv = new Server();
-            serv.setSocket(s1, s2);
+            serv.setSockets(s1, s2);
             new Thread(serv).start();
         }
     }
