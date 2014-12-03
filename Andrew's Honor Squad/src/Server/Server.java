@@ -8,8 +8,27 @@ package Server;
 
 /**
  *
- * @author Eric Sullivan
+ * @author Justin Jiang
  */
-public class Server {
+import java.net.*;
 
+public class Server extends GameLogic implements Runnable
+{
+    public void run()
+    {
+        execute();
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        ServerSocket se = new ServerSocket(10000);
+        while(true)
+        {
+            Socket s1 = se.accept();
+            Socket s2 = se.accept();
+            Server serv = new Server();
+            serv.setSocket(s1, s2);
+            new Thread(serv).start();
+        }
+    }
 }
