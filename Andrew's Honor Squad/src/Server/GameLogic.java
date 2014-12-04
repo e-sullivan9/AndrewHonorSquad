@@ -44,12 +44,30 @@ public class GameLogic {
             writer2.write("2");
             while(true){
                 String line  = reader.readLine();
-                writer.write("1,"+processInput("1,"+line));
-                writer2.write("1,"+processInput("1,"+line));
-                String line2 = reader2.readLine();
-                writer.write("2,"+processInput("2,"+line2));
-                writer2.write("2,"+processInput("2,"+line2));
+                String line3 = "1,"+processInput("1,"+line);
+                writer.write(line3);
+                writer.newLine();
+                writer.flush();
+                writer2.write(line3);
+                writer2.newLine();
+                writer2.flush();
+                if(line3.split(",").length==4)
+                    break;
+                 String line2 = reader2.readLine();
+                String line4 ="2,"+processInput("2,"+line2);
+                writer.write(line4);
+                writer.newLine();
+                writer.flush();
+                writer2.write(line4);
+                writer2.newLine();
+                writer2.flush();
+                if(line3.split(",").length==4)
+                    break;
             }
+            writer.close();
+            reader.close();
+            writer2.close();
+            reader2.close();
          }
          catch(Exception e){
                     e.printStackTrace();
