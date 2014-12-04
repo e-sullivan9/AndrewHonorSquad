@@ -31,6 +31,15 @@ public class Client
         writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
     }
     
+    public Client(String string) throws IOException
+    {
+        hostname = string;
+        port = 10000;
+        s = new Socket(hostname, port);
+        reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+    }
+    
     public String receive() throws IOException
     {
         String result = reader.readLine();
