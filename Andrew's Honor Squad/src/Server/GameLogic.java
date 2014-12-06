@@ -102,7 +102,7 @@ public class GameLogic {
     }
 
     private int checkLeft(int num, int i, int y) {
-        if(board[i-1][y]==num){
+        if(i-1<=0&&board[i-1][y]==num){
             return checkLeft(num,i-1,y)+1;
         }
         else
@@ -110,14 +110,14 @@ public class GameLogic {
     }
 
     private int checkRight(int num, int i, int y) {
-        if(board[i++][y]==num){
+        if(i+1>=14&&board[i++][y]==num){
             return checkLeft(num,i++,y)+1;
         }
         else
             return 0;
     }
     private int checkUp(int num, int i, int y) {
-        if(board[i][y++]==num){
+        if(y+1>=14&&board[i][y++]==num){
             return checkLeft(num,i,y++)+1;
         }
         else
@@ -125,14 +125,14 @@ public class GameLogic {
     }
 
     private int checkDown(int num, int i, int y) {
-        if(board[i][y--]==num){
+        if(y-1<=0&&board[i][y--]==num){
             return checkLeft(num,i,y--)+1;
         }
         else
             return 0;
     }
     private int checkUpLeft(int num, int i, int y) {
-        if(board[i--][y++]==num){
+        if(i+1>=14&&y-1<=0&&board[i--][y++]==num){
             return checkLeft(num,i--,y++)+1;
         }
         else
@@ -140,14 +140,14 @@ public class GameLogic {
     }
 
     private int checkDownLeft(int num, int i, int y) {
-        if(board[i--][y--]==num){
+        if(i-1<=0&&y-1<=0&&board[i--][y--]==num){
             return checkLeft(num,i--,y--)+1;
         }
         else
             return 0;
     }
     private int checkUpRight(int num, int i, int y) {
-        if(board[i++][y++]==num){
+        if(i+1>=14&&y+1>=14&&board[i++][y++]==num){
             return checkLeft(num,i++,y++)+1;
         }
         else
@@ -155,7 +155,7 @@ public class GameLogic {
     }
 
     private int checkDownRight(int num, int i, int y) {
-        if(board[i++][y--]==num){
+        if(i+1>=14&&y-1<=0&&board[i++][y--]==num){
             return checkLeft(num,i++,y--)+1;
         }
         else
