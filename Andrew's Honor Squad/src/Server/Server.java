@@ -12,13 +12,22 @@ package Server;
  */
 import java.net.*;
 
+/* Server portion of Five in a Row game
+
+*/
 public class Server extends GameLogic implements Runnable
 {
+    /** Executes server side game logic code
+     * 
+     */
     public void run()
     {
         execute();
     }
-
+/* Main method creates server socket, accepts 2 client connections,
+    then creates game server thread.
+    
+    */
     public static void main(String[] args) throws Exception
     {
         ServerSocket se = new ServerSocket(10000);
