@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Server;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,7 +11,9 @@ import java.util.logging.Logger;
 
 
 /**
- *
+ * Interior Server side logic for connect 5
+ * Andrew's Honors Students
+ * 12/7/14
  * @author Eric Sullivan
  */
 public class GameLogic {
@@ -29,10 +27,19 @@ public class GameLogic {
         y=0;
         board = new int[15][15];
     }
+    /**
+     * Sets the the socket
+     * @param socket
+     * @param socket2 
+     */
      public void setSockets(Socket socket, Socket socket2){
         this.socket=socket;
         this.socket=socket2;
     }
+     /**
+      * This method creates player turns and then readers and writes to the client
+      * side logic. also calls the processInput method.
+      */
      public void execute(){
          try{
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -75,6 +82,12 @@ public class GameLogic {
         }
      
  }
+     /**
+      * This method takes the String from the client and checks if that client
+      * has won the game
+      * @param line
+      * @return line processed for client
+      */
 
     private String processInput(String line) {
         String[] split = line.split(",");
@@ -100,6 +113,14 @@ public class GameLogic {
         else
             return(""+num+","+x+","+y);
     }
+    /**
+     * recursive method that checks to the left of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
 
     private int checkLeft(int num, int i, int y) {
         if(i-1<=0&&board[i-1][y]==num){
@@ -108,7 +129,14 @@ public class GameLogic {
         else
             return 0;
     }
-
+    /**
+     * recursive method that checks to the right of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkRight(int num, int i, int y) {
         if(i+1>=14&&board[i++][y]==num){
             return checkLeft(num,i++,y)+1;
@@ -116,6 +144,14 @@ public class GameLogic {
         else
             return 0;
     }
+        /**
+     * recursive method that checks to the up of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkUp(int num, int i, int y) {
         if(y+1>=14&&board[i][y++]==num){
             return checkLeft(num,i,y++)+1;
@@ -123,7 +159,14 @@ public class GameLogic {
         else
             return 0;
     }
-
+    /**
+     * recursive method that checks to the down of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkDown(int num, int i, int y) {
         if(y-1<=0&&board[i][y--]==num){
             return checkLeft(num,i,y--)+1;
@@ -131,6 +174,14 @@ public class GameLogic {
         else
             return 0;
     }
+        /**
+     * recursive method that checks to the top left of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkUpLeft(int num, int i, int y) {
         if(i+1>=14&&y-1<=0&&board[i--][y++]==num){
             return checkLeft(num,i--,y++)+1;
@@ -138,7 +189,14 @@ public class GameLogic {
         else
             return 0;
     }
-
+    /**
+     * recursive method that checks to the bottom left of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkDownLeft(int num, int i, int y) {
         if(i-1<=0&&y-1<=0&&board[i--][y--]==num){
             return checkLeft(num,i--,y--)+1;
@@ -146,6 +204,14 @@ public class GameLogic {
         else
             return 0;
     }
+        /**
+     * recursive method that checks to the top right of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkUpRight(int num, int i, int y) {
         if(i+1>=14&&y+1>=14&&board[i++][y++]==num){
             return checkLeft(num,i++,y++)+1;
@@ -153,7 +219,14 @@ public class GameLogic {
         else
             return 0;
     }
-
+    /**
+     * recursive method that checks to the bottom right of the current point in the d2 
+     * array.
+     * @param num
+     * @param i
+     * @param y
+     * @return 
+     */
     private int checkDownRight(int num, int i, int y) {
         if(i+1>=14&&y-1<=0&&board[i++][y--]==num){
             return checkLeft(num,i++,y--)+1;
