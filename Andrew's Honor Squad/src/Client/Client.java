@@ -13,7 +13,8 @@ package Client;
 
 import java.io.*;
 import java.net.*;
-
+/* Client portion of Five in a Row game
+*/
 public class Client
 {
     protected String hostname;
@@ -22,6 +23,9 @@ public class Client
     protected BufferedReader reader;
     protected BufferedWriter writer;
     
+    /** Default Constructor for local game
+     * @throws IOException 
+     */
     public Client() throws IOException
     {
         hostname = "localhost";
@@ -31,6 +35,11 @@ public class Client
         writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
     }
     
+    /** Constructor for IP game
+     * 
+     * @param string IP address of server
+     * @throws IOException 
+     */
     public Client(String string) throws IOException
     {
         hostname = string;
@@ -40,12 +49,22 @@ public class Client
         writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
     }
     
+    /** Reads buffered string from server
+     * 
+     * @return result The string read from the server
+     * @throws IOException 
+     */
     public String receive() throws IOException
     {
         String result = reader.readLine();
         return result;
     }
     
+    /** Writes buffered string to the server
+     * 
+     * @param s String to be written
+     * @throws IOException 
+     */
     public void send(String s) throws IOException
     {
         writer.write(s);

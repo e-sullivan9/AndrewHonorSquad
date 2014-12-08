@@ -108,19 +108,19 @@ public class GameLogic {
         x = Integer.parseInt(split[1]);
         y = Integer.parseInt(split[2]);
             board[x][y]=num;
-            if(checkLeft(num,x,y)+checkRight(num,x,y)==5){
+            if(checkLeft(num,x,y)+checkRight(num,x,y)>5){
                 return(""+num+","+x+","+y+","+"win");
             }
             else
-            if(checkUp(num,x,y)+checkDown(num,x,y)==5){
+            if(checkUp(num,x,y)+checkDown(num,x,y)>5){
                 return(""+num+","+x+","+y+","+"win");
             }
             else
-            if(checkUpLeft(num,x,y)+checkDownRight(num,x,y)==5){
+            if(checkUpLeft(num,x,y)+checkDownRight(num,x,y)>5){
                 return(""+num+","+x+","+y+","+"win");
             }
             else
-            if(checkUpRight(num,x,y)+checkDownLeft(num,x,y)==5){
+            if(checkUpRight(num,x,y)+checkDownLeft(num,x,y)>5){
                 return(""+num+","+x+","+y+","+"win");
             }
             else
