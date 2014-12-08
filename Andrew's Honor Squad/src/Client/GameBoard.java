@@ -35,15 +35,20 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 	JPanel turnPanel;
 	JLabel currentPlayer;
 	JLabel currentTurnLabel;
+        JButton turn;
 	JButton turnImage ;
 	JPanel chatPanel;
 	JTextField enterField;
 	JTextArea displayArea;
+        JOptionPane joption;
 
 	public GameBoard(){
 		try
 		{
-			client = new Client();
+                    
+                        String hzotgherwiuogdsfwe =
+                                joption.showInputDialog("custom ip address?");
+			client = new Client(hzotgherwiuogdsfwe);
 			player = Integer.parseInt( client.receive()); 
 		}
 		catch(Exception e)
@@ -85,7 +90,11 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 
 		//Menu Panel
 		mainPanel = new JPanel(new BorderLayout());
-
+                
+                
+                //TeamBannerpanel
+                JPanel teamBanner = new JPanel(new BorderLayout());
+               
 		//Gameboard
 		gameBoard = new JPanel();
 		gameBoard.setLayout(new GridLayout(15,15,1,1));
@@ -113,7 +122,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		turnPanel.setSize(50,675);
 		turnPanel.setBackground(Color.pink);
 		currentPlayer = new JLabel("Player:"+player);
-		JButton turn = new JButton(currentTurnImage);
+	        turn = new JButton(currentTurnImage);
 		currentTurnLabel = new JLabel(new ImageIcon(getClass().getResource("pylon1.jpg")));
 
 
@@ -136,20 +145,16 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		mainPanel.add(gameBoard, BorderLayout.WEST);
 		mainPanel.add(turnPanel, BorderLayout.EAST);
 		mainPanel.add(chatPanel, BorderLayout.SOUTH);
-		frame.add(mainPanel);
+                frame.add(mainPanel);
+                
+                frame.setDefaultCloseOperation(player);
+               
+		
 		frame.pack();
 	}
 
 //search for button
-	public void searchBoard(int x, int y){
-		for (int i = 0; i < 15; i++) 
-		{
-			for (int j = 0; j < 15; j++)
-			{
-
-			}
-		}
-	}
+	
         public void run() {
         
             while(true){
@@ -163,13 +168,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
             }
     }
 
-	public void placePiece(){
-		
-	}
-	
-	public void searchPiece(){
-		
-	}
+
         public void processInput(){
             SwingUtilities.invokeLater(new Runnable(){
             
@@ -182,8 +181,10 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
                                 //find button
                                 if(Integer.parseInt(s[0])==1)
                                     boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(terran);
+                                    turn.setIcon(terranTurn);
                                 if(Integer.parseInt(s[0])==2)
                                     boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(zerg);
+                                    turn.setIcon(zergTurn);
                         //change button by player
                         
                                 if(current==1){
