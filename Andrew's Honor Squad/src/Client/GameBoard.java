@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 
-public class GameBoard extends JFrame implements ActionListener, Cloneable{
+public class GameBoard extends JFrame implements ActionListener, Runnable{
 
 	private ImageIcon terran = new ImageIcon(getClass().getResource("terran.jpg"));
 	private ImageIcon zerg = new ImageIcon(getClass().getResource("zerg.jpg"));
@@ -20,6 +20,7 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 	private ImageIcon currentTurnImage =zergTurn;
 	private ImageIcon PlayerMarker;
 	int[] information= new int[4];
+        private String input="";
 	private int player;
         private int current = 1;
 	Client client;
@@ -95,7 +96,7 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 			{
 				boardSquares[i][j] = new JButton();
 				boardSquares[i][j].setPreferredSize(new Dimension(45,45));
-				boardSquares[i][j].setIcon(new ImageIcon(getClass().getResource("blue_overlay.jpg")));				
+				boardSquares[i][j].setIcon(blue);				
 				boardSquares[i][j].putClientProperty("row", i);
 				boardSquares[i][j].putClientProperty("col", j);
 				boardSquares[i][j].putClientProperty("marker", 0);
@@ -149,6 +150,18 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 			}
 		}
 	}
+        public void run() {
+        
+            while(true){
+                try {
+                    input = client.receive();
+                    System.out.println(input);
+                    processInput();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+    }
 
 	public void placePiece(){
 		
@@ -157,17 +170,15 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 	public void searchPiece(){
 		
 	}
-        public void execute(){
+        public void processInput(){
             SwingUtilities.invokeLater(new Runnable(){
             
             public void run(){
                 
-                try {
-                    String line = client.receive();
-                    String[] s = line.split(",");
+                    System.out.println(input);
+                    String[] s = input.split(",");
                     if(boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].getIcon().equals(blue))
                         {
-                            if(Integer.parseInt(s[0])==current){
                                 //find button
                                 if(Integer.parseInt(s[0])==1)
                                     boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(terran);
@@ -180,12 +191,8 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
                                 }
                                 else
                                     current=1;
-                             }
                         }
                     
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
             }
             
             
@@ -204,6 +211,7 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 				+","+ button.getClientProperty("row")
                                 +","+ button.getClientProperty("col");
             try {
+                if(player==current)
                 client.send(info);System.out.println(info);
                 //Button locations
                 /*
@@ -241,10 +249,11 @@ public class GameBoard extends JFrame implements ActionListener, Cloneable{
 
 		GameBoard gameboard = new GameBoard();
 		gameboard.drawGUI();
-                gameboard.execute();
+                gameboard.run();
 
 
 	}
+
 
 
 
