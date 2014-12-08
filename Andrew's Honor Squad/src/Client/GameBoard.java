@@ -179,12 +179,20 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
                     if(boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].getIcon().equals(blue))
                         {
                                 //find button
-                                if(Integer.parseInt(s[0])==1)
+                                if(Integer.parseInt(s[0])==1){
                                     boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(terran);
-                                    turn.setIcon(terranTurn);
-                                if(Integer.parseInt(s[0])==2)
-                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(zerg);
+                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setDisabledIcon(terran);
+                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setEnabled(false);
                                     turn.setIcon(zergTurn);
+                                }
+                                if(Integer.parseInt(s[0])==2){
+                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setIcon(zerg);
+                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setDisabledIcon(zerg);
+                                    boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].setEnabled(false);
+                                    turn.setIcon(terranTurn);
+                                }
+
+                                
                         //change button by player
                         
                                 if(current==1){

@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -67,9 +65,11 @@ public class GameLogic {
                 writer2.flush();
                 System.out.println(line);
                 System.out.println(line3);
+                
                 if(line3.split(",").length==4)
                     break;
-                 String line2 = reader2.readLine();
+                
+                String line2 = reader2.readLine();
                 String line4 = processInput(line2);
                 
                 writer.write(line4);
@@ -81,6 +81,7 @@ public class GameLogic {
                 writer2.flush();
                 System.out.println(line2);
                 System.out.println(line4);
+                
                 if(line3.split(",").length==4)
                     break;
             }
