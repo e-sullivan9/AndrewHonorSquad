@@ -101,6 +101,9 @@ public class GameLogic {
 
     }
 
+    /**
+     * This method safely closes the input and output streams.
+     */
     public void close() {
         SwingUtilities.invokeLater(new Runnable() {
 
@@ -118,6 +121,9 @@ public class GameLogic {
         });
     }
 
+    /**
+     * This method opens the input and output streams.
+     */
     public void open() {
         try {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
