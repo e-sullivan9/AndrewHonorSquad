@@ -17,7 +17,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 	private ImageIcon terranTurn = new ImageIcon(getClass().getResource("terranTurn.jpg"));
 	private ImageIcon backgroundImage= new ImageIcon(getClass().getResource("wallpaper.jpeg"));
         private ImageIcon blue = new ImageIcon(getClass().getResource("blue_overlay.jpg"));
-	private ImageIcon currentTurnImage =zergTurn;
+	private ImageIcon currentTurnImage =terranTurn;
 	private ImageIcon PlayerMarker;
 	int[] information= new int[4];
         private String input="";
@@ -147,7 +147,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		mainPanel.add(chatPanel, BorderLayout.SOUTH);
                 frame.add(mainPanel);
                 
-                frame.setDefaultCloseOperation(player);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                
 		
 		frame.pack();
@@ -169,7 +169,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
     }
 
 
-        public void processInput(){
+        public synchronized void processInput(){
             SwingUtilities.invokeLater(new Runnable(){
             
             public void run(){
