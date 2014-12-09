@@ -15,7 +15,7 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 	private ImageIcon zerg = new ImageIcon(getClass().getResource("zerg.jpg"));
 	private ImageIcon zergTurn = new ImageIcon(getClass().getResource("zergTurn.jpg"));
 	private ImageIcon terranTurn = new ImageIcon(getClass().getResource("terranTurn.jpg"));
-	private ImageIcon backgroundImage= new ImageIcon(getClass().getResource("wallpaper.jpeg"));
+	private ImageIcon backgroundImage= new ImageIcon(getClass().getResource("wallpaper.jpg"));
         private ImageIcon blue = new ImageIcon(getClass().getResource("blue_overlay.jpg"));
 	private ImageIcon currentTurnImage =terranTurn;
 	private ImageIcon PlayerMarker;
@@ -26,30 +26,40 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 	Client client;
 
 	JFrame frame;
+        JPanel topPanel;
 	JMenuBar menuBar;
 	JMenu menu,help,rush;
 	JMenuItem NewGame;
 	JPanel mainPanel;
+        JPanel teamBanner;
 	JPanel gameBoard;
 	JButton[][] boardSquares;
 	JPanel turnPanel;
 	JLabel currentPlayer;
 	JLabel currentTurnLabel;
-        JButton turn;
+        JLabel turn;
 	JButton turnImage ;
 	JPanel chatPanel;
 	JTextField enterField;
 	JTextArea displayArea;
         JOptionPane joption;
+        JFrame waitingScreen=new JFrame();
+        JLabel background = new JLabel(backgroundImage);
+       
+        
 
 	public GameBoard(){
 		try
 		{
-                    
-                        String hzotgherwiuogdsfwe =
-                                joption.showInputDialog("custom ip address?");
-			client = new Client(hzotgherwiuogdsfwe);
+                        waitingScreen.add(background);
+                        waitingScreen.setVisible(true);
+                        waitingScreen.setSize(1280,720);
+                        waitingScreen.setLocationRelativeTo(null);
+                        String customip =
+                                joption.showInputDialog("Leave Empty for localHost\n"+"or Enter a custom IP and go on an adventure");
+			client = new Client(customip);
 			player = Integer.parseInt( client.receive()); 
+                        waitingScreen.dispose();
 		}
 		catch(Exception e)
 		{
@@ -62,15 +72,17 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 
 		JFrame frame = new JFrame("Connect 5 Game Window");
 		frame.setVisible(true);
-		frame.setSize(900, 900);
+		frame.setSize(900, 950);
 		frame.setResizable(false);
+                frame.setLocationRelativeTo(null);
 
 
 		//MENU BAR 
 		//Worthless menu that can have added features 
 		//such as starting a game, Learning that there is no help availible,
 		//or Zerg Rush for win
-
+		topPanel = new JPanel(new BorderLayout());
+                
 
 		menuBar = new JMenuBar();
 		menu = new JMenu("Menu");
@@ -87,14 +99,21 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		NewGame = new JMenuItem("Win");
 		rush.add(NewGame);
 
-
+                
 		//Menu Panel
 		mainPanel = new JPanel(new BorderLayout());
                 
                 
                 //TeamBannerpanel
-                JPanel teamBanner = new JPanel(new BorderLayout());
-               
+                teamBanner = new JPanel(new BorderLayout());
+                teamBanner.setSize(900, 50);
+                JLabel banner = new JLabel();
+                banner.setIcon(zerg);
+                teamBanner.add(banner);
+                
+                
+                topPanel.add(menuBar, BorderLayout.NORTH);
+                topPanel.add(teamBanner,BorderLayout.SOUTH);
 		//Gameboard
 		gameBoard = new JPanel();
 		gameBoard.setLayout(new GridLayout(15,15,1,1));
@@ -120,9 +139,11 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		//TurnPanel
 		turnPanel = new JPanel(new BorderLayout());
 		turnPanel.setSize(50,675);
-		turnPanel.setBackground(Color.pink);
-		currentPlayer = new JLabel("Player:"+player);
-	        turn = new JButton(currentTurnImage);
+		turnPanel.setBackground(Color.white);
+		currentPlayer = new JLabel("Current Turn");
+                currentPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+	        turn = new JLabel(currentTurnImage);
+                turn.setSize(224, 358);
 		currentTurnLabel = new JLabel(new ImageIcon(getClass().getResource("pylon1.jpg")));
 
 
@@ -136,12 +157,13 @@ public class GameBoard extends JFrame implements ActionListener, Runnable{
 		enterField = new JTextField();
 		chatPanel.add(enterField, BorderLayout.NORTH);
 		displayArea = new JTextArea(5, 5);
+                displayArea.append("The Protoss have disable all communication...\n How sad...");
 		chatPanel.add(new JScrollPane(displayArea), BorderLayout.SOUTH);
 		chatPanel.setBackground(Color.blue);
 
 
 
-		mainPanel.add(menuBar, BorderLayout.NORTH);
+		mainPanel.add(topPanel, BorderLayout.NORTH);
 		mainPanel.add(gameBoard, BorderLayout.WEST);
 		mainPanel.add(turnPanel, BorderLayout.EAST);
 		mainPanel.add(chatPanel, BorderLayout.SOUTH);
