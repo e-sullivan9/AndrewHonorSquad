@@ -2,7 +2,6 @@ package Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.*;
@@ -28,11 +27,10 @@ public class GameLogic {
         x = 0;
         y = 0;
         board = new int[15][15];
-        System.out.println(board[0][0]);
     }
 
     /**
-     * Sets the the socket
+     * Sets the the sockets.
      *
      * @param socket
      * @param socket2
@@ -69,11 +67,9 @@ public class GameLogic {
                 writer2.write(line3);
                 writer2.newLine();
                 writer2.flush();
-                // System.out.println(line);
-                System.out.println(line3);
+
 
                 if (line3.split(",").length != 4) {
-                  //  break;
 
                     String line2 = reader2.readLine();
                     line4 = processInput(line2);
@@ -85,12 +81,9 @@ public class GameLogic {
                     writer2.write(line4);
                     writer2.newLine();
                     writer2.flush();
-                    //System.out.println(line2);
-                    System.out.println(line4);
+
                 }
 
-                //if(line3.split(",").length==4)
-                //  break;
             }
             close();
 
@@ -174,7 +167,6 @@ public class GameLogic {
     private int checkLeft(int num, int i, int y) {
         System.out.print("left: " + board[i][y]);
         if (i - 1 >= 0 && board[i - 1][y] == num) {
-            System.out.print("left: " + board[i][y]);
             return checkLeft(num, i - 1, y) + 1;
 
         } else {
@@ -193,7 +185,6 @@ public class GameLogic {
      */
     private int checkRight(int num, int i, int y) {
         if (i + 1 <= 14 && board[i + 1][y] == num) {
-            System.out.print("Right: " + board[i][y]);
             return checkRight(num, i + 1, y) + 1;
         } else {
             return 0;
@@ -279,7 +270,6 @@ public class GameLogic {
      */
     private int checkUpRight(int num, int i, int y) {
         if (i - 1 >= 0 && y + 1 <= 14 && board[i - 1][y + 1] == num) {
-
             return checkUpRight(num, i - 1, y + 1) + 1;
         } else {
             return 0;
