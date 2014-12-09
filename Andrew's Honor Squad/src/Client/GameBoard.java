@@ -1,3 +1,10 @@
+/*
+ Computer Networking project
+ Leonid Melnikov
+
+
+
+ */
 package Client;
 
 import java.awt.*;
@@ -9,6 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+/**
+ *
+ * @author leonid Melnikov
+ */
 public class GameBoard extends JFrame implements ActionListener, Runnable {
 
     private ImageIcon terran = new ImageIcon(getClass().getResource("terran.jpg"));
@@ -20,13 +31,13 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
     private ImageIcon backgroundImage = new ImageIcon(getClass().getResource("wallpaper.jpg"));
     private ImageIcon blue = new ImageIcon(getClass().getResource("blue_overlay.jpg"));
     private ImageIcon currentTurnImage = terranTurn;
-    private ImageIcon PlayerMarker;
     private boolean isPlaying = true;
     private String input = "";
     private int player;
     private int current = 1;
     Client client;
 
+    //initialize all of the JComponents that shall be used
     JFrame frame;
     JPanel topPanel;
     JMenuBar menuBar;
@@ -49,6 +60,11 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
     JFrame waitingScreen = new JFrame();
     JLabel background = new JLabel(backgroundImage);
 
+    /**
+     *
+     * Constructor that builds a waitingScreen and connects Client then disposes
+     * wwaitingScreen as soon as both clients are accepted
+     */
     public GameBoard() {
         try {
             waitingScreen.add(background);
@@ -66,6 +82,9 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
 
     }
 
+    /**
+     *
+     */
     public void drawGUI() {
 
         JFrame frame = new JFrame("Connect 5 Game Window");
@@ -162,13 +181,15 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
         frame.pack();
     }
 
-//search for button
+    /**
+     * Listening for information from GameLogic and sends to processInput
+     *
+     */
     public void run() {
 
         while (isPlaying) {
             try {
                 input = client.receive();
-                System.out.println(input);
                 processInput();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -176,14 +197,18 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
         }
     }
 
+    /**
+     * This Method processes the input that is received from the server
+     * GameLogic Receives a string and splits into a String []; based on
+     * information, either updates the game board and disables the updated
+     * button and update the player turn
+     */
     public synchronized void processInput() {
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
 
                 String[] s = input.split(",");
-                System.out.println("s length " + s.length);
-                System.out.println(Arrays.toString(s));
                 if (boardSquares[Integer.parseInt(s[1])][Integer.parseInt(s[2])].getIcon().equals(blue)) {
 
                     //find button
@@ -244,8 +269,13 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
         });
     }
 
+    /**
+     * This method gets the information for the JButton click and sends the info
+     * to the server if the click came from the currentTurn player
+     *
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
-        //All the information will come from 
         JButton button = (JButton) e.getSource();
         String info
                 = "" + player
@@ -255,12 +285,16 @@ public class GameBoard extends JFrame implements ActionListener, Runnable {
             if (player == current) {
                 client.send(info);
             }
-            System.out.println(info);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     * main method
+     *
+     * @param args
+     */
     public static void main(String args[]) {
 
         GameBoard gameboard = new GameBoard();
