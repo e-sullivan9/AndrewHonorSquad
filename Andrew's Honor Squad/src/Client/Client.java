@@ -72,4 +72,14 @@ public class Client
         writer.flush();
     }
     
+    /** Closes BufferedReader and BufferedWriter
+     * 
+     * @throws IOException 
+     */
+    public void close() throws IOException
+    {
+        reader.close();
+        writer.close();
+    }
+    
 }
