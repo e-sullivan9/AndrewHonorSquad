@@ -165,7 +165,6 @@ public class GameLogic {
      */
 
     private int checkLeft(int num, int i, int y) {
-        System.out.print("left: " + board[i][y]);
         if (i - 1 >= 0 && board[i - 1][y] == num) {
             return checkLeft(num, i - 1, y) + 1;
 
